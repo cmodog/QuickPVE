@@ -16,15 +16,10 @@
 
 ## 功能截图
 
-![查看运行的容器](https://img.blog.ln.cn/img/image-20220906201133359.png)
-
-![创建容器](https://img.blog.ln.cn/img/image-20220906201340544.png)
-
-![销毁容器](https://img.blog.ln.cn/img/image-20220906201414890.png)
-
-![开关机](https://img.blog.ln.cn/img/image-20220906201555721.png)
-
-![配置NAT转换](https://img.blog.ln.cn/img/image-20220906201624761.png)
+![查看容器](https://user-images.githubusercontent.com/53931809/188633562-eddebfd7-72ee-4c86-8fda-d5934c4078bc.png)
+![创建容器](https://user-images.githubusercontent.com/53931809/188633638-0a40df76-0141-4c06-89de-87039efba433.png)
+![销毁容器](https://user-images.githubusercontent.com/53931809/188633690-83c820b3-fa1e-4dba-a033-14970411ae77.png)
+![配置地址转换](https://user-images.githubusercontent.com/53931809/188633732-31233f68-e92c-4673-8c43-a9ffd802a9c8.png)
 
 创建容器时候就会要求配置NAT转换，同时也可以直接运行项目下的iptables.sh脚本来配置转换
 
@@ -36,8 +31,8 @@
 
 ```text
 转换前			8.8.8.8 --> 123.23.23.23:10022(主机公网IP)
-母鸡转换后	 8.8.8.8 --> 192.168.1.100:10022(容器内网IP)
-小鸡转换后  8.8.8.8 --> 192.168.1.100:22
+主机转换后	 8.8.8.8 --> 192.168.1.100:10022(容器内网IP)
+客户机转换后  8.8.8.8 --> 192.168.1.100:22
 ```
 
 流量回去的时候会根据nat表自动转换回去
