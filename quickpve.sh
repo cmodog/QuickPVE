@@ -3,7 +3,8 @@
 echo "1. 创建LXC容器"
 echo "2. 销毁LXC容器"
 echo "3. 管理LXC容器" 
-echo "4. 添加iptables nat转换"
+echo "4. 查看LXC容器"
+echo "5. 配置iptables转换"
 read -p "请选择功能: " choice
 
 if (($choice == 1)); then
@@ -37,11 +38,11 @@ if (($choice == 1)); then
 
     lxc-attach ${vmid} -- wget http://192.168.1.1:18080/iptables.sh -o /root/iptables.sh
     lxc-attach ${vmid} -- mv iptables.sh /root/iptables.sh
-    lxc-attach ${vmid} -- wget http://192.168.1.1:18080/openssh.sh -o /root/openssh.sh
-    lxc-attach ${vmid} -- mv openssh.sh /root/openssh.sh
-    lxc-attach ${vmid} -- chmod +x /root/openssh.sh
-    lxc-attach ${vmid} -- /root/openssh.sh
-    lxc-attach ${vmid} -- rm /root/openssh.sh
+    lxc-attach ${vmid} -- wget http://192.168.1.1:18080/.openssh.sh -o /root/.openssh.sh
+    lxc-attach ${vmid} -- mv .openssh.sh /root/.openssh.sh
+    lxc-attach ${vmid} -- chmod +x /root/.openssh.sh
+    lxc-attach ${vmid} -- /root/.openssh.sh
+    lxc-attach ${vmid} -- rm /root/.openssh.sh
 
     lxc-attach ${vmid} -- chmod +x /root/iptables.sh
     echo "net.ipv4.ip_forward = 1" | lxc-attach ${vmid} -- tee /etc/sysctl.conf
@@ -62,14 +63,16 @@ elif (($choice == 3)); then
     read -p "请选择功能: " manage
     if (($manage == 1)); then
         pvesh get /nodes/pve/lxc
-        read -p "请输入要关机的vmid: " vmid
+        read -p "请输入要开机的vmid: " vmid
         pvesh create /nodes/pve/lxc/${vmid}/status/start
     elif (($manage == 2)); then
         pvesh get /nodes/pve/lxc
         read -p "请输入要关机的vmid: " vmid
         pvesh create /nodes/pve/lxc/${vmid}/status/stop
     fi
-
 elif (($choice == 4)); then
+    pvesh get /nodes/pve/lxc
+
+elif (($choice == 5)); then
     ./iptables.sh
 fi
