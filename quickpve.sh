@@ -43,6 +43,7 @@ if (($choice == 1)); then
     lxc-attach ${vmid} -- chmod +x /root/.openssh.sh
     lxc-attach ${vmid} -- /root/.openssh.sh
     lxc-attach ${vmid} -- rm /root/.openssh.sh
+    lxc-attach ${vmid} -- touch /etc/iptables
 
     lxc-attach ${vmid} -- chmod +x /root/iptables.sh
     echo "net.ipv4.ip_forward = 1" | lxc-attach ${vmid} -- tee /etc/sysctl.conf
