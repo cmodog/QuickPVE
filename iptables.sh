@@ -15,15 +15,17 @@ do
             read -p "输入数字选择功能: " choice
 
             if (($choice == 1)); then
-                read -p "请输入需要被转发端口小鸡的内网IP: " ip
-                read -p "请输入你要分配给这个小鸡的端口段(例如8000:9000): " port
-                iptables -t nat -A PREROUTING -p tcp -m multiport --dport ${port}  -j DNAT --to-destination ${ip}
+                read -p "请输入需要被转发端口lxc容器的内网IP: " ip
+                read -p "请输入你要分配给这个lxc的端口段(例如8000:9000): " ports
+                iptables -t nat -A PREROUTING -p tcp -m multiport --dport ${ports}  -j DNAT --to-destination ${ip}
+                iptables-save > /dev/null
             elif (($choice == 2)); then
                 iptables -t nat --list --line-number
             elif (($choice == 3)); then
                 iptables -t nat --list --line-number
                 read -p "请输入要删除的编号: " num
                 iptables -t nat -D PREROUTING ${num}
+                iptables-save > /dev/null
             elif (($choice == 0)); then
                 break 2
             else
@@ -42,12 +44,14 @@ do
                 read -p "请输入你需要被转发的端口: " sport
                 read -p "请输入你需要转发到公网IP的端口: " dport
                 iptables -t nat -A PREROUTING -p tcp --dport ${dport} -j REDIRECT --to-ports ${sport}
+                iptables-save > /dev/null
             elif (($choice == 2)); then
                 iptables -t nat --list --line-number
             elif (($choice == 3)); then
                 iptables -t nat --list --line-number
                 read -p "请输入要删除的编号: " num
                 iptables -t nat -D PREROUTING ${num}
+                iptables-save > /dev/null
             elif (($choice == 0)); then
                 break 2
             else
